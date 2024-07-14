@@ -14,7 +14,7 @@ public class SubscriptionDAO implements Dao<SubscriptionEntity, Long> {
 
     private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String JDBC_USERNAME = "postgres";
-    private static final String JDBC_PASSWORD = "Aba32835";
+    private static final String JDBC_PASSWORD = "Ferid100";
 
     private static final String INSERT_SQL = "INSERT INTO subscriptions (name, price, start_date, end_date, active) VALUES (?, ?, ?, ?, ?)";
     private static final String SELECT_ALL_SQL = "SELECT * FROM subscriptions";
@@ -54,7 +54,6 @@ public class SubscriptionDAO implements Dao<SubscriptionEntity, Long> {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            // Handle exception or rethrow as a custom runtime exception
             throw new RuntimeException("Failed to save subscription", ex);
         }
         return entity;
@@ -72,7 +71,6 @@ public class SubscriptionDAO implements Dao<SubscriptionEntity, Long> {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-            // Handle exception or rethrow as a custom runtime exception
             throw new RuntimeException("Failed to calculate total price of subscriptions", ex);
         }
         return totalPrice;
@@ -91,7 +89,6 @@ public class SubscriptionDAO implements Dao<SubscriptionEntity, Long> {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            // Handle exception or rethrow as a custom runtime exception
             throw new RuntimeException("Failed to fetch all subscriptions", ex);
         }
         return subscriptions;
@@ -111,7 +108,6 @@ public class SubscriptionDAO implements Dao<SubscriptionEntity, Long> {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            // Handle exception or rethrow as a custom runtime exception
             throw new RuntimeException("Failed to find subscription by id: " + id, ex);
         }
         return Optional.ofNullable(subscription);
@@ -126,8 +122,26 @@ public class SubscriptionDAO implements Dao<SubscriptionEntity, Long> {
             stmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            // Handle exception or rethrow as a custom runtime exception
             throw new RuntimeException("Failed to delete subscription with id: " + id, ex);
+        }
+    }
+
+
+    public void partialUpdate(Long id, String name, Double price, LocalDate startDate, LocalDate endDate, Boolean active) {
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(PARTIAL_UPDATE_SQL)) {
+
+            stmt.setString(1, name);
+            stmt.setDouble(2, price);
+            stmt.setObject(3, startDate);
+            stmt.setObject(4, endDate);
+            stmt.setBoolean(5, active);
+            stmt.setLong(6, id);
+
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException("Failed to partially update subscription with id: " + id, ex);
         }
     }
 

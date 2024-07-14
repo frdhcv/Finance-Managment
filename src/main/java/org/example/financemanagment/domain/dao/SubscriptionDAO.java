@@ -1,6 +1,7 @@
 package org.example.financemanagment.domain.dao;
 
 import org.example.financemanagment.domain.entity.SubscriptionEntity;
+import org.example.financemanagment.util.Utils;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -16,7 +17,7 @@ public class SubscriptionDAO implements Dao<SubscriptionEntity, Long> {
     private static final String JDBC_USERNAME = "postgres";
     private static final String JDBC_PASSWORD = "Ferid100";
 
-    private static final String INSERT_SQL = "INSERT INTO subscriptions (name, price, start_date, end_date, active) VALUES (?, ?, ?, ?, ?)";
+    private static final String INSERT_SQL = "INSERT INTO subscriptions (name, price, start_date, end_date, active, user_id) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String SELECT_ALL_SQL = "SELECT * FROM subscriptions";
     private static final String SELECT_BY_ID_SQL = "SELECT * FROM subscriptions WHERE id = ?";
     private static final String DELETE_SQL = "DELETE FROM subscriptions WHERE id = ?";
@@ -38,6 +39,7 @@ public class SubscriptionDAO implements Dao<SubscriptionEntity, Long> {
             stmt.setObject(3, entity.getStartDate());
             stmt.setObject(4, entity.getEndDate());
             stmt.setBoolean(5, entity.isActive());
+            stmt.setLong(6, Utils.userId);
 
             int affectedRows = stmt.executeUpdate();
 

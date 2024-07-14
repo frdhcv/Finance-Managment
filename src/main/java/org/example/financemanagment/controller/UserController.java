@@ -1,8 +1,11 @@
 package org.example.financemanagment.controller;
 
+import org.example.financemanagment.domain.entity.LoginRequest;
 import org.example.financemanagment.domain.entity.User;
 import org.example.financemanagment.service.UserService;
+import org.example.financemanagment.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,13 +29,18 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody User user) {
-        boolean isAuthenticated = userService.login(user.getUserName(), user.getPassword());
+    public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest) {
+        String username = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+
+        boolean isAuthenticated = userService.login(username, password);
         if (isAuthenticated) {
-            return ResponseEntity.ok("Login successful.");
+            Utils.userId = userService.getUserId(loginRequest.getUsername(), loginRequest.getPassword());
+            return ResponseEntity.ok("Giriş uğurludur.");
         } else {
-            return ResponseEntity.status(401).body("Invalid user credentials.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("İstifadəçi məlumatları yanlışdır.");
         }
     }
 

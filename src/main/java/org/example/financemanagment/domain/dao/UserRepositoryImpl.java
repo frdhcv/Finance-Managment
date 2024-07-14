@@ -2,6 +2,7 @@ package org.example.financemanagment.domain.dao;
 
 import org.example.financemanagment.domain.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -32,6 +33,19 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Long getUserId(String userName, String password) {
+        String sql = "SELECT id FROM users WHERE user_name = ? AND password = ?";
+        try {
+            Long userId = jdbcTemplate.queryForObject(sql, new Object[]{userName, password}, Long.class);
+            return userId;
+        } catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    @Override
     public void deleteById(Long id) {
         String sql = "DELETE FROM users WHERE id = ?";
         jdbcTemplate.update(sql, id);
@@ -55,4 +69,6 @@ public class UserRepositoryImpl implements UserRepository {
             );
         }
     }
+
+
 }

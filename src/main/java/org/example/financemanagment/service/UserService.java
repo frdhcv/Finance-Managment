@@ -1,5 +1,6 @@
 package org.example.financemanagment.service;
 
+import org.example.financemanagment.domain.dao.UserRepositoryImpl;
 import org.example.financemanagment.domain.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,11 @@ public class UserService {
     private static final String UPDATE_SQL = "UPDATE users SET first_name = ?, last_name = ?, user_name = ?, email = ?, phone_number = ?, password = ? WHERE id = ?";
     private static final String PARTIAL_UPDATE_SQL = "UPDATE users SET first_name = COALESCE(?, first_name), last_name = COALESCE(?, last_name), user_name = COALESCE(?, user_name), email = COALESCE(?, email), phone_number = COALESCE(?, phone_number), password = COALESCE(?, password) WHERE id = ?";
     private static final String SELECT_BY_USERNAME_AND_PASSWORD_SQL = "SELECT * FROM users WHERE user_name = ? AND password = ?";
+    private final UserRepositoryImpl userRepositoryImpl;
+
+    public UserService(UserRepositoryImpl userRepositoryImpl) {
+        this.userRepositoryImpl = userRepositoryImpl;
+    }
 
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
@@ -119,5 +125,9 @@ public class UserService {
         user.setPhoneNumber(rs.getString("phone_number"));
         user.setPassword(rs.getString("password"));
         return user;
+    }
+
+    public Long getUserId (String username, String password){
+        return userRepositoryImpl.getUserId(username, password);
     }
 }

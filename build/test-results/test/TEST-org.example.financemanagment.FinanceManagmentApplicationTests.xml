@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.financemanagment.FinanceManagmentApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-07-14T12:13:50" hostname="DESKTOP-PDCOTIN" time="0.54">
+  <properties/>
+  <testcase name="contextLoads()" classname="org.example.financemanagment.FinanceManagmentApplicationTests" time="0.54"/>
+  <system-out><![CDATA[16:13:48.893 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [org.example.financemanagment.FinanceManagmentApplicationTests]: FinanceManagmentApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:13:48.963 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration org.example.financemanagment.FinanceManagmentApplication for test class org.example.financemanagment.FinanceManagmentApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.1)
+
+2024-07-14T16:13:49.252+04:00  INFO 5388 --- [Finance-Managment] [    Test worker] o.e.f.FinanceManagmentApplicationTests   : Starting FinanceManagmentApplicationTests using Java 21.0.3 with PID 5388 (started by hajiyev.farid in C:\Users\hajiyev.farid\IdeaProjects\Finance-Managment)
+2024-07-14T16:13:49.253+04:00  INFO 5388 --- [Finance-Managment] [    Test worker] o.e.f.FinanceManagmentApplicationTests   : No active profile set, falling back to 1 default profile: "default"
+2024-07-14T16:13:50.355+04:00  INFO 5388 --- [Finance-Managment] [    Test worker] o.e.f.FinanceManagmentApplicationTests   : Started FinanceManagmentApplicationTests in 1.269 seconds (process running for 2.038)
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\hajiyev.farid\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.17\e3c251a39dc90badaf71c83427ba46840f219d8d\byte-buddy-agent-1.14.17.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

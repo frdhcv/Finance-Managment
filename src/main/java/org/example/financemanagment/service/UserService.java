@@ -1,10 +1,11 @@
-package org.example.financemanagment;
+package org.example.financemanagment.service;
 
-import com.example.financemanagement.model.User;
-import com.example.financemanagement.repository.UserRepository;
+import org.example.financemanagment.domain.dao.UserRepository;
+import org.example.financemanagment.domain.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,7 +15,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public User register(String firstName, String lastName, String userName, String email, String phoneNumber, String password) {
-        User user = new User(null, firstName, lastName, userName, email, phoneNumber, password);
+        User user = new User(firstName, lastName, userName, email, phoneNumber, password);
         return userRepository.save(user);
     }
 
@@ -25,5 +26,8 @@ public class UserService {
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

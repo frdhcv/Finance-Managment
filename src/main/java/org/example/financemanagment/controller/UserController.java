@@ -1,10 +1,14 @@
-package org.example.financemanagment;
+package org.example.financemanagment.controller;
 
-import com.example.financemanagement.model.User;
-import com.example.financemanagement.service.UserService;
+import org.example.financemanagment.domain.entity.User;
+import org.example.financemanagment.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -14,24 +18,32 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
+    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody User user) {
         User registeredUser = userService.register(user.getFirstName(), user.getLastName(), user.getUserName(), user.getEmail(), user.getPhoneNumber(), user.getPassword());
-        return ResponseEntity.ok(registeredUser);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("Cavab","Qeydiyyat uğurla tamamlandı.");
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody User user) {
         boolean isAuthenticated = userService.login(user.getUserName(), user.getPassword());
         if (isAuthenticated) {
-            return ResponseEntity.ok("Login successful");
+            return ResponseEntity.ok("Giriş uğurludur.");
         } else {
-            return ResponseEntity.status(401).body("Invalid credentials");
+            return ResponseEntity.status(401).body("İstifadəçi  məlumatları yanlışdır.");
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.ok("User deleted successfully");
+        return ResponseEntity.ok("İstifadəçi məlumatları uğurla silindi");
+    }
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 }

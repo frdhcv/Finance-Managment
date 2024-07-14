@@ -1,6 +1,6 @@
-package org.example.financemanagment;
+package org.example.financemanagment.domain.dao;
 
-import com.example.financemanagement.model.User;
+import org.example.financemanagment.domain.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -35,12 +36,16 @@ public class UserRepositoryImpl implements UserRepository {
         String sql = "DELETE FROM users WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
+    @Override
+    public List<User> findAll() {
+        String sql = "SELECT * FROM users";
+        return jdbcTemplate.query(sql, new UserRowMapper());
+    }
 
     private static final class UserRowMapper implements RowMapper<User> {
         @Override
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new User(
-                    rs.getLong("id"),
                     rs.getString("first_name"),
                     rs.getString("last_name"),
                     rs.getString("user_name"),
